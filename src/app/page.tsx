@@ -8,9 +8,10 @@ import TodayGlow from "@/components/TodayGlow";
 import WeeklyGoals from "@/components/WeeklyGoals";
 import ContentPlanner from "@/components/ContentPlanner";
 import IncomeDeal from "@/components/IncomeDeal";
+import SelfBodyCare from "@/components/SelfBodyCare";
 import JournalMilestones from "@/components/JournalMilestones";
 
-const tabs = [TodayGlow, WeeklyGoals, ContentPlanner, IncomeDeal, JournalMilestones];
+const tabs = [TodayGlow, WeeklyGoals, ContentPlanner, IncomeDeal, SelfBodyCare, JournalMilestones];
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0);

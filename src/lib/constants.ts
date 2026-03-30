@@ -130,6 +130,75 @@ export interface ContentEntry {
   created_at: string;
 }
 
+// ── Self Body Care ──────────────────────────────────────────────
+
+export const SKINCARE_AM = [
+  { id: 1, emoji: "🧴", label: "Cleanser / Face wash" },
+  { id: 2, emoji: "💧", label: "Toner" },
+  { id: 3, emoji: "✨", label: "Serum (Vitamin C / Niacinamide)" },
+  { id: 4, emoji: "🧊", label: "Moisturizer" },
+  { id: 5, emoji: "☀️", label: "Sunscreen SPF 30+" },
+];
+
+export const SKINCARE_PM = [
+  { id: 6, emoji: "🫧", label: "Double cleanse (oil + foam)" },
+  { id: 7, emoji: "💧", label: "Toner" },
+  { id: 8, emoji: "🌙", label: "Serum (Retinol / AHA-BHA)" },
+  { id: 9, emoji: "👁️", label: "Eye cream" },
+  { id: 10, emoji: "🧴", label: "Night cream / Sleeping mask" },
+];
+
+export const WEEKLY_CARE_ITEMS = [
+  { id: 1, emoji: "🧖‍♀️", label: "Face mask / Sheet mask", frequency: "2x/minggu" },
+  { id: 2, emoji: "🧽", label: "Exfoliasi / Scrub wajah", frequency: "1-2x/minggu" },
+  { id: 3, emoji: "🛁", label: "Body scrub", frequency: "2x/minggu" },
+  { id: 4, emoji: "💆‍♀️", label: "Hair mask / Treatment", frequency: "1x/minggu" },
+  { id: 5, emoji: "💅", label: "Nail care (potong, file, cuticle)", frequency: "1x/minggu" },
+  { id: 6, emoji: "🦶", label: "Foot care / Scrub kaki", frequency: "1x/minggu" },
+  { id: 7, emoji: "🫶", label: "Full body moisturizing", frequency: "Setiap hari" },
+  { id: 8, emoji: "💋", label: "Lip scrub + lip mask", frequency: "2x/minggu" },
+];
+
+export const SKIN_CONDITIONS = [
+  { value: "glowing", emoji: "✨", label: "Glowing" },
+  { value: "normal", emoji: "😊", label: "Normal" },
+  { value: "oily", emoji: "💦", label: "Oily" },
+  { value: "dry", emoji: "🏜️", label: "Kering" },
+  { value: "breakout", emoji: "😣", label: "Breakout" },
+];
+
+export interface SkinLogEntry {
+  id: string;
+  date: string;
+  condition: string;
+  note: string;
+  created_at: string;
+}
+
+export interface BodyCareProduct {
+  id: string;
+  name: string;
+  category: string;
+  opened_date: string;
+  expiry_months: number;
+  notes: string;
+  is_active: boolean;
+  created_at: string;
+}
+
+export const PRODUCT_CATEGORIES = [
+  "Cleanser",
+  "Toner",
+  "Serum",
+  "Moisturizer",
+  "Sunscreen",
+  "Mask",
+  "Body Care",
+  "Hair Care",
+  "Lip Care",
+  "Lainnya",
+];
+
 export function getWeekNumber(date: Date): number {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   const dayNum = d.getUTCDay() || 7;

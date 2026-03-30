@@ -7,7 +7,8 @@ const tabs = [
   { id: 1, icon: "📅", label: "Weekly" },
   { id: 2, icon: "🎬", label: "Content" },
   { id: 3, icon: "💰", label: "Income" },
-  { id: 4, icon: "📓", label: "Journal" },
+  { id: 4, icon: "🧖‍♀️", label: "Body Care" },
+  { id: 5, icon: "📓", label: "Journal" },
 ];
 
 interface TabNavigationProps {
@@ -23,7 +24,7 @@ export default function TabNavigation({ activeTab, onTabChange }: TabNavigationP
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className="relative flex flex-col items-center py-2 px-3 min-w-0 flex-1"
+            className="relative flex flex-col items-center py-2 px-2 min-w-0 flex-1"
           >
             {activeTab === tab.id && (
               <motion.div
@@ -35,9 +36,9 @@ export default function TabNavigation({ activeTab, onTabChange }: TabNavigationP
                 transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
               />
             )}
-            <span className="text-xl relative z-10">{tab.icon}</span>
+            <span className="text-lg relative z-10">{tab.icon}</span>
             <span
-              className={`text-[10px] font-label relative z-10 mt-0.5 transition-colors ${
+              className={`text-[9px] font-label relative z-10 mt-0.5 transition-colors ${
                 activeTab === tab.id ? "text-pink-500 font-semibold" : "text-gray-400"
               }`}
             >
