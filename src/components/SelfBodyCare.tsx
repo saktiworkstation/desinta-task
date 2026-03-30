@@ -48,6 +48,8 @@ export default function SelfBodyCare() {
 
   // Streak
   const [careStreak, setCareStreak] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);
+  const [streakUpdatedToday, setStreakUpdatedToday] = useState(false);
 
   const todayStr = getTodayString();
   const weekNumber = getWeekNumber(new Date());
@@ -95,7 +97,7 @@ export default function SelfBodyCare() {
           .order("created_at", { ascending: false }),
         supabase
           .from("bodycare_streak")
-          .select("current_streak")
+          .select("current_streak, longest_streak, updated_at")
           .eq("user_id", USER_ID)
           .single(),
       ]);
@@ -126,7 +128,15 @@ export default function SelfBodyCare() {
 
       if (skinRes.data) setSkinLogs(skinRes.data);
       if (productRes.data) setProducts(productRes.data);
-      if (streakRes.data) setCareStreak(streakRes.data.current_streak);
+      if (streakRes.data) {
+        setCareStreak(streakRes.data.current_streak);
+        setLongestStreak(streakRes.data.longest_streak);
+        // Check if streak was already updated today
+        if (streakRes.data.updated_at) {
+          const lastUpdate = streakRes.data.updated_at.split("T")[0];
+          setStreakUpdatedToday(lastUpdate === todayStr);
+        }
+      }
     } catch (err) {
       console.error("Error fetching body care data:", err);
     } finally {
@@ -137,6 +147,73 @@ export default function SelfBodyCare() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  // Update streak when all daily routine items are completed
+  const updateStreak = useCallback(async () => {
+    if (streakUpdatedToday) return;
+
+    const newStreak = careStreak + 1;
+    const newLongest = Math.max(newStreak, longestStreak);
+
+    setCareStreak(newStreak);
+    setLongestStreak(newLongest);
+    setStreakUpdatedToday(true);
+
+    try {
+      await supabase
+        .from("bodycare_streak")
+        .update({
+          current_streak: newStreak,
+          longest_streak: newLongest,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("user_id", USER_ID);
+    } catch (err) {
+      console.error("Error updating streak:", err);
+    }
+  }, [careStreak, longestStreak, streakUpdatedToday]);
+
+  // Reset streak if yesterday was missed (check on load)
+  const checkStreakContinuity = useCallback(async () => {
+    if (loading) return;
+
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
+
+    try {
+      const { data } = await supabase
+        .from("bodycare_daily")
+        .select("item_id, completed")
+        .eq("user_id", USER_ID)
+        .eq("date", yesterdayStr);
+
+      if (data) {
+        const yesterdayCompleted = data.filter((t: { completed: boolean }) => t.completed).length;
+        // If yesterday had no completed items at all and streak > 0, reset
+        if (yesterdayCompleted === 0 && careStreak > 0 && !streakUpdatedToday) {
+          setCareStreak(0);
+          await supabase
+            .from("bodycare_streak")
+            .update({ current_streak: 0, updated_at: new Date().toISOString() })
+            .eq("user_id", USER_ID);
+        }
+      }
+    } catch (err) {
+      console.error("Error checking streak continuity:", err);
+    }
+  }, [loading, careStreak, streakUpdatedToday]);
+
+  useEffect(() => {
+    checkStreakContinuity();
+  }, [checkStreakContinuity]);
+
+  // Trigger streak update when routine hits 100%
+  useEffect(() => {
+    if (routineProgress === 100 && !loading && !streakUpdatedToday) {
+      updateStreak();
+    }
+  }, [routineProgress, loading, streakUpdatedToday, updateStreak]);
 
   const toggleRoutineItem = async (itemId: number, routine: "am" | "pm") => {
     const setter = routine === "am" ? setCompletedAM : setCompletedPM;
