@@ -1,12 +1,14 @@
 export const DAILY_TASKS = [
-  { id: 1, emoji: "🌅", label: "Cek email/WA — ada tawaran endorse baru?", time: "pagi", timeSlot: "07:00", duration: "15 mnt", startHour: 7, endHour: 8 },
-  { id: 2, emoji: "🌅", label: "Review & balas semua DM brand di TikTok/IG", time: "pagi", timeSlot: "08:00", duration: "20 mnt", startHour: 8, endHour: 9 },
-  { id: 3, emoji: "📚", label: "2 jam fokus skripsi — bab yang sedang dikerjakan", time: "siang", timeSlot: "10:00", duration: "2 jam", startHour: 10, endHour: 12 },
-  { id: 4, emoji: "🎥", label: "Buat/edit 1 konten TikTok hari ini", time: "siang", timeSlot: "13:00", duration: "1–2 jam", startHour: 13, endHour: 15 },
-  { id: 5, emoji: "📱", label: "Post atau schedule 1 konten ke TikTok/IG", time: "sore", timeSlot: "17:00", duration: "10 mnt", startHour: 17, endHour: 18 },
-  { id: 6, emoji: "📊", label: "Cek analytics konten kemarin — catat insight", time: "sore", timeSlot: "18:00", duration: "15 mnt", startHour: 18, endHour: 19 },
+  { id: 1, emoji: "🌅", label: "Cek email/WA — ada tawaran endorse baru?", time: "pagi", timeSlot: "09:00", duration: "15 mnt", startHour: 9, endHour: 10 },
+  { id: 2, emoji: "💬", label: "Review & balas semua DM brand di TikTok/IG", time: "pagi", timeSlot: "10:00", duration: "20 mnt", startHour: 10, endHour: 11 },
+  { id: 3, emoji: "📚", label: "2 jam fokus skripsi — bab yang sedang dikerjakan", time: "siang", timeSlot: "11:00", duration: "2 jam", startHour: 11, endHour: 13 },
+  { id: 4, emoji: "🎥", label: "Buat/edit 1 konten TikTok hari ini", time: "siang", timeSlot: "13:00", duration: "1–2 jam", startHour: 13, endHour: 16 },
+  { id: 9, emoji: "🏃‍♀️", label: "Olahraga sore — minimal 30 menit", time: "sore", timeSlot: "16:00", duration: "45 mnt", startHour: 16, endHour: 17 },
+  { id: 10, emoji: "🛁", label: "Istirahat & mandi sore", time: "sore", timeSlot: "17:00", duration: "30 mnt", startHour: 17, endHour: 18 },
+  { id: 5, emoji: "📱", label: "Post atau schedule 1 konten ke TikTok/IG", time: "sore", timeSlot: "18:00", duration: "10 mnt", startHour: 18, endHour: 19 },
+  { id: 6, emoji: "📊", label: "Cek analytics konten kemarin — catat insight", time: "malam", timeSlot: "19:00", duration: "15 mnt", startHour: 19, endHour: 20 },
   { id: 7, emoji: "📝", label: "Follow up brand deal yang pending", time: "malam", timeSlot: "20:00", duration: "15 mnt", startHour: 20, endHour: 21 },
-  { id: 8, emoji: "🌙", label: "Isi journal hari ini — 3 hal yang disyukuri", time: "malam", timeSlot: "21:30", duration: "10 mnt", startHour: 21, endHour: 22 },
+  { id: 8, emoji: "🌙", label: "Isi journal hari ini — 3 hal yang disyukuri", time: "malam", timeSlot: "21:30", duration: "10 mnt", startHour: 21, endHour: 23 },
 ];
 
 export const WEEKLY_TASKS = [
