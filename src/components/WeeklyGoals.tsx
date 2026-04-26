@@ -207,6 +207,12 @@ export default function WeeklyGoals() {
               >
                 {task.emoji} {task.label}
               </p>
+              <div className="flex flex-col items-end gap-0.5 flex-shrink-0">
+                <span className="text-[10px] font-label px-2 py-0.5 rounded-full bg-purple-50 text-purple-400 whitespace-nowrap">
+                  {task.day}
+                </span>
+                <span className="text-[9px] font-label text-gray-300 whitespace-nowrap">{task.timeSlot}</span>
+              </div>
             </motion.div>
           ))}
         </div>

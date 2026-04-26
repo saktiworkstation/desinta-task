@@ -315,7 +315,16 @@ export default function IncomeDeal() {
                     {inc.description || inc.source}
                   </p>
                   <p className="text-xs text-gray-400 font-label">
-                    {inc.source} • {inc.date}
+                    {inc.source} •{" "}
+                    {new Date(inc.date + "T00:00:00").toLocaleDateString("id-ID", {
+                      day: "numeric",
+                      month: "short",
+                    })}{" "}
+                    •{" "}
+                    {new Date(inc.created_at).toLocaleTimeString("id-ID", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </p>
                 </div>
                 <p className="text-sm font-heading font-bold text-green-500 ml-3 flex-shrink-0">

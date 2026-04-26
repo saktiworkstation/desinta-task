@@ -476,9 +476,12 @@ export default function SelfBodyCare() {
               {/* AM Routine */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-label font-semibold text-gray-500">
-                    ☀️ Morning Routine
-                  </h3>
+                  <div>
+                    <h3 className="text-sm font-label font-semibold text-gray-500">
+                      ☀️ Morning Routine
+                    </h3>
+                    <span className="text-[10px] font-label text-pink-300">06:30 – 07:00</span>
+                  </div>
                   <span className="text-xs font-label text-pink-400">
                     {amCount}/{SKINCARE_AM.length}
                   </span>
@@ -542,9 +545,12 @@ export default function SelfBodyCare() {
               {/* PM Routine */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-label font-semibold text-gray-500">
-                    🌙 Night Routine
-                  </h3>
+                  <div>
+                    <h3 className="text-sm font-label font-semibold text-gray-500">
+                      🌙 Night Routine
+                    </h3>
+                    <span className="text-[10px] font-label text-purple-300">21:00 – 21:30</span>
+                  </div>
                   <span className="text-xs font-label text-pink-400">
                     {pmCount}/{SKINCARE_PM.length}
                   </span>

@@ -236,6 +236,14 @@ export default function JournalMilestones() {
                         day: "numeric",
                         month: "short",
                       })}
+                      {entry.created_at && (
+                        <span className="ml-1.5 text-gray-300">
+                          · {new Date(entry.created_at).toLocaleTimeString("id-ID", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                      )}
                     </p>
                     {entry.note && (
                       <p className="text-sm font-body text-foreground mt-1 whitespace-pre-wrap">

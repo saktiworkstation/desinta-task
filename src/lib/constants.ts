@@ -1,22 +1,22 @@
 export const DAILY_TASKS = [
-  { id: 1, emoji: "🌅", label: "Cek email/WA — ada tawaran endorse baru?", time: "pagi" },
-  { id: 2, emoji: "🌅", label: "Review & balas semua DM brand di TikTok/IG", time: "pagi" },
-  { id: 3, emoji: "📚", label: "2 jam fokus skripsi — bab yang sedang dikerjakan", time: "siang" },
-  { id: 4, emoji: "🎥", label: "Buat/edit 1 konten TikTok hari ini", time: "siang" },
-  { id: 5, emoji: "📱", label: "Post atau schedule 1 konten ke TikTok/IG", time: "sore" },
-  { id: 6, emoji: "📊", label: "Cek analytics konten kemarin — catat insight", time: "sore" },
-  { id: 7, emoji: "📝", label: "Follow up brand deal yang pending", time: "malam" },
-  { id: 8, emoji: "🌙", label: "Isi journal hari ini — 3 hal yang disyukuri", time: "malam" },
+  { id: 1, emoji: "🌅", label: "Cek email/WA — ada tawaran endorse baru?", time: "pagi", timeSlot: "07:00", duration: "15 mnt", startHour: 7, endHour: 8 },
+  { id: 2, emoji: "🌅", label: "Review & balas semua DM brand di TikTok/IG", time: "pagi", timeSlot: "08:00", duration: "20 mnt", startHour: 8, endHour: 9 },
+  { id: 3, emoji: "📚", label: "2 jam fokus skripsi — bab yang sedang dikerjakan", time: "siang", timeSlot: "10:00", duration: "2 jam", startHour: 10, endHour: 12 },
+  { id: 4, emoji: "🎥", label: "Buat/edit 1 konten TikTok hari ini", time: "siang", timeSlot: "13:00", duration: "1–2 jam", startHour: 13, endHour: 15 },
+  { id: 5, emoji: "📱", label: "Post atau schedule 1 konten ke TikTok/IG", time: "sore", timeSlot: "17:00", duration: "10 mnt", startHour: 17, endHour: 18 },
+  { id: 6, emoji: "📊", label: "Cek analytics konten kemarin — catat insight", time: "sore", timeSlot: "18:00", duration: "15 mnt", startHour: 18, endHour: 19 },
+  { id: 7, emoji: "📝", label: "Follow up brand deal yang pending", time: "malam", timeSlot: "20:00", duration: "15 mnt", startHour: 20, endHour: 21 },
+  { id: 8, emoji: "🌙", label: "Isi journal hari ini — 3 hal yang disyukuri", time: "malam", timeSlot: "21:30", duration: "10 mnt", startHour: 21, endHour: 22 },
 ];
 
 export const WEEKLY_TASKS = [
-  { id: 1, emoji: "📱", label: "Post minimal 5 konten TikTok minggu ini" },
-  { id: 2, emoji: "📩", label: "Kirim 3 proposal ke brand baru untuk endorse" },
-  { id: 3, emoji: "📚", label: "Progress skripsi: selesaikan 1 sub-bab" },
-  { id: 4, emoji: "👨‍🏫", label: "Konsultasi/bimbingan dengan dosen pembimbing (Pak Rian)" },
-  { id: 5, emoji: "📊", label: "Review performa konten minggu ini (views, likes, engagement)" },
-  { id: 6, emoji: "🔍", label: "Riset 3 produk/brand baru yang potential untuk endorse" },
-  { id: 7, emoji: "🧖‍♀️", label: "Self-care: minimal 1 hari istirahat penuh" },
+  { id: 1, emoji: "📱", label: "Post minimal 5 konten TikTok minggu ini", day: "Tiap hari", timeSlot: "17:00–19:00" },
+  { id: 2, emoji: "📩", label: "Kirim 3 proposal ke brand baru untuk endorse", day: "Selasa", timeSlot: "10:00" },
+  { id: 3, emoji: "📚", label: "Progress skripsi: selesaikan 1 sub-bab", day: "Senin–Jumat", timeSlot: "10:00–12:00" },
+  { id: 4, emoji: "👨‍🏫", label: "Konsultasi/bimbingan dengan dosen pembimbing (Pak Rian)", day: "Rabu/Kamis", timeSlot: "09:00" },
+  { id: 5, emoji: "📊", label: "Review performa konten minggu ini (views, likes, engagement)", day: "Jumat", timeSlot: "18:00" },
+  { id: 6, emoji: "🔍", label: "Riset 3 produk/brand baru yang potential untuk endorse", day: "Sabtu", timeSlot: "14:00" },
+  { id: 7, emoji: "🧖‍♀️", label: "Self-care: minimal 1 hari istirahat penuh", day: "Minggu", timeSlot: "Seharian" },
 ];
 
 export const AFFIRMATIONS = [
@@ -127,6 +127,7 @@ export interface ContentEntry {
   brand_name: string | null;
   status: string;
   notes: string;
+  scheduled_time: string | null;
   created_at: string;
 }
 

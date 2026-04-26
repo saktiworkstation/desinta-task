@@ -27,6 +27,7 @@ export default function ContentPlanner() {
   const [formType, setFormType] = useState("Review");
   const [formBrand, setFormBrand] = useState("");
   const [formStatus, setFormStatus] = useState("idea");
+  const [formScheduledTime, setFormScheduledTime] = useState("");
   const [formNotes, setFormNotes] = useState("");
 
   const fetchContents = useCallback(async () => {
@@ -72,6 +73,7 @@ export default function ContentPlanner() {
           content_type: formType,
           brand_name: formBrand || null,
           status: formStatus,
+          scheduled_time: formScheduledTime || null,
           notes: formNotes,
         })
         .select()
@@ -103,6 +105,7 @@ export default function ContentPlanner() {
       setFormBrand("");
       setFormNotes("");
       setFormStatus("idea");
+      setFormScheduledTime("");
     } catch (err) {
       console.error("Error adding content:", err);
     }
@@ -235,6 +238,17 @@ export default function ContentPlanner() {
               </div>
             </div>
             <div>
+              <label className="text-xs font-label text-gray-500 mb-1 block">
+                ⏰ Jam Tayang <span className="text-gray-300">(opsional — prime time TikTok: 17:00–21:00)</span>
+              </label>
+              <input
+                type="time"
+                value={formScheduledTime}
+                onChange={(e) => setFormScheduledTime(e.target.value)}
+                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm font-body focus:border-pink-300 focus:outline-none"
+              />
+            </div>
+            <div>
               <label className="text-xs font-label text-gray-500 mb-1 block">Catatan</label>
               <textarea
                 value={formNotes}
@@ -324,7 +338,14 @@ export default function ContentPlanner() {
                         {content.notes && (
                           <p className="text-xs text-gray-400 font-body mt-1 truncate">{content.notes}</p>
                         )}
-                        <p className="text-[10px] text-gray-300 font-label mt-1">{content.date}</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <p className="text-[10px] text-gray-300 font-label">{content.date}</p>
+                          {content.scheduled_time && (
+                            <span className="text-[10px] font-label text-pink-400 bg-pink-50 px-1.5 py-0.5 rounded-full">
+                              ⏰ {content.scheduled_time}
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <motion.button
                         whileTap={{ scale: 0.9 }}

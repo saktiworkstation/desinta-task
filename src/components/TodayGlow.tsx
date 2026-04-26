@@ -31,6 +31,14 @@ export default function TodayGlow() {
   const completedCount = Object.values(completed).filter(Boolean).length;
   const progress = (completedCount / DAILY_TASKS.length) * 100;
   const allDone = completedCount === DAILY_TASKS.length;
+  const currentHour = today.getHours();
+
+  const getTaskStatus = (task: typeof DAILY_TASKS[0]) => {
+    if (completed[task.id]) return "done";
+    if (currentHour >= task.startHour && currentHour < task.endHour) return "now";
+    if (currentHour >= task.endHour) return "overdue";
+    return "upcoming";
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -195,69 +203,85 @@ export default function TodayGlow() {
       <div>
         <h2 className="text-lg font-heading font-bold text-foreground mb-3">Daily Checklist</h2>
         <div className="space-y-2">
-          {DAILY_TASKS.map((task, index) => (
-            <motion.div
-              key={task.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => toggleTask(task.id)}
-              className={`relative flex items-center gap-3 p-3 rounded-2xl cursor-pointer transition-all ${
-                completed[task.id]
-                  ? "bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200"
-                  : "bg-white border border-gray-100 hover:border-pink-200"
-              } shadow-card`}
-            >
-              {/* Custom Checkbox */}
-              <div className="relative flex-shrink-0">
-                <motion.div
-                  className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-colors ${
-                    completed[task.id]
-                      ? "bg-pink-500 border-pink-500"
-                      : "border-gray-300"
-                  }`}
-                  animate={completed[task.id] ? { scale: [1, 1.2, 1] } : {}}
-                >
-                  {completed[task.id] && (
-                    <motion.svg
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-4 h-4 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={3}
-                    >
-                      <motion.path
-                        d="M5 13l4 4L19 7"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </motion.svg>
-                  )}
-                </motion.div>
-                <Sparkle show={sparklingId === task.id} />
-              </div>
+          {DAILY_TASKS.map((task, index) => {
+            const taskStatus = getTaskStatus(task);
+            return (
+              <motion.div
+                key={task.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.05 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => toggleTask(task.id)}
+                className={`relative flex items-center gap-3 p-3 rounded-2xl cursor-pointer transition-all ${
+                  completed[task.id]
+                    ? "bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200"
+                    : taskStatus === "now"
+                    ? "bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-300"
+                    : "bg-white border border-gray-100 hover:border-pink-200"
+                } shadow-card`}
+              >
+                {/* Custom Checkbox */}
+                <div className="relative flex-shrink-0">
+                  <motion.div
+                    className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-colors ${
+                      completed[task.id]
+                        ? "bg-pink-500 border-pink-500"
+                        : "border-gray-300"
+                    }`}
+                    animate={completed[task.id] ? { scale: [1, 1.2, 1] } : {}}
+                  >
+                    {completed[task.id] && (
+                      <motion.svg
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-4 h-4 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                      >
+                        <motion.path
+                          d="M5 13l4 4L19 7"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </motion.svg>
+                    )}
+                  </motion.div>
+                  <Sparkle show={sparklingId === task.id} />
+                </div>
 
-              {/* Task content */}
-              <div className="flex-1 min-w-0">
-                <p
-                  className={`text-sm font-body ${
-                    completed[task.id] ? "line-through text-gray-400" : "text-foreground"
-                  }`}
-                >
-                  {task.emoji} {task.label}
-                </p>
-              </div>
+                {/* Task content */}
+                <div className="flex-1 min-w-0">
+                  <p
+                    className={`text-sm font-body ${
+                      completed[task.id] ? "line-through text-gray-400" : "text-foreground"
+                    }`}
+                  >
+                    {task.emoji} {task.label}
+                  </p>
+                </div>
 
-              {/* Time badge */}
-              <span className="text-[10px] font-label px-2 py-0.5 rounded-full bg-pink-50 text-pink-400 flex-shrink-0">
-                {task.time}
-              </span>
-            </motion.div>
-          ))}
+                {/* Time badge */}
+                <div className="flex flex-col items-end gap-0.5 flex-shrink-0">
+                  <span
+                    className={`text-[10px] font-label px-2 py-0.5 rounded-full ${
+                      taskStatus === "now"
+                        ? "bg-pink-500 text-white"
+                        : taskStatus === "overdue" && !completed[task.id]
+                        ? "bg-orange-50 text-orange-400"
+                        : "bg-pink-50 text-pink-400"
+                    }`}
+                  >
+                    {taskStatus === "now" ? "⏰ " : ""}{task.timeSlot}
+                  </span>
+                  <span className="text-[9px] font-label text-gray-300">{task.duration}</span>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </div>
